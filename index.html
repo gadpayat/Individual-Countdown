@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barangay Project Completion Countdown</title>
+
+<style>
+body{
+    font-family:Arial, sans-serif;
+    background:#111;
+    color:white;
+    margin:20px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#222;
+}
+
+th{
+    background:#c62828;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    text-align:center;
+    border:1px solid #444;
+}
+
+tr:nth-child(even){
+    background:#2a2a2a;
+}
+
+.status{
+    font-weight:bold;
+}
+
+.completed{
+    color:#00ff66;
+}
+
+.ongoing{
+    color:#ffcc00;
+}
+
+.delayed{
+    color:#ff4444;
+}
+</style>
+</head>
+<body>
+
+<h1>Project Completion Countdown for 16 Barangays</h1>
+
+<table>
+<thead>
+<tr>
+<th>Barangay</th>
+<th>Start Date</th>
+<th>Completion Date</th>
+<th>Days Remaining</th>
+<th>% Time Elapsed</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="projectTable"></tbody>
+
+</table>
+
+<script>
+
+const projects = [
+
+{
+barangay:"Barangay 1",
+start:"2025-01-15",
+end:"2026-10-31"
+},
+{
+barangay:"Barangay 2",
+start:"2025-02-01",
+end:"2026-09-15"
+},
+{
+barangay:"Barangay 3",
+start:"2025-03-01",
+end:"2026-08-30"
+},
+{
+barangay:"Barangay 4",
+start:"2025-01-20",
+end:"2026-11-15"
+},
+{
+barangay:"Barangay 5",
+start:"2025-02-10",
+end:"2026-12-01"
+},
+{
+barangay:"Barangay 6",
+start:"2025-03-05",
+end:"2026-10-20"
+},
+{
+barangay:"Barangay 7",
+start:"2025-01-10",
+end:"2026-11-30"
+},
+{
+barangay:"Barangay 8",
+start:"2025-02-15",
+end:"2026-09-30"
+},
+{
+barangay:"Barangay 9",
+start:"2025-01-25",
+end:"2026-08-15"
+},
+{
+barangay:"Barangay 10",
+start:"2025-03-01",
+end:"2026-10-31"
+},
+{
+barangay:"Barangay 11",
+start:"2025-02-20",
+end:"2026-12-15"
+},
+{
+barangay:"Barangay 12",
+start:"2025-01-05",
+end:"2026-11-01"
+},
+{
+barangay:"Barangay 13",
+start:"2025-03-10",
+end:"2026-09-20"
+},
+{
+barangay:"Barangay 14",
+start:"2025-01-18",
+end:"2026-10-10"
+},
+{
+barangay:"Barangay 15",
+start:"2025-02-25",
+end:"2026-12-31"
+},
+{
+barangay:"Barangay 16",
+start:"2025-03-15",
+end:"2026-11-20"
+}
+
+];
+
+function updateTable(){
+
+const table = document.getElementById("projectTable");
+table.innerHTML="";
+
+const now = new Date();
+
+projects.forEach(project=>{
+
+const start = new Date(project.start);
+const end = new Date(project.end);
+
+const totalDuration = end - start;
+const elapsed = now - start;
+
+const percent =
+Math.min(
+100,
+Math.max(
+0,
+(elapsed / totalDuration) * 100
+)
+).toFixed(1);
+
+const remaining =
+Math.ceil(
+(end - now)/(1000*60*60*24)
+);
+
+let statusClass="";
+let statusText="";
+
+if(remaining < 0){
+statusClass="completed";
+statusText="Completed";
+}
+else{
+statusClass="ongoing";
+statusText="Ongoing";
+}
+
+table.innerHTML += `
+<tr>
+<td>${project.barangay}</td>
+<td>${project.start}</td>
+<td>${project.end}</td>
+<td>${remaining > 0 ? remaining : 0}</td>
+<td>${percent}%</td>
+<td class="${statusClass}">${statusText}</td>
+</tr>
+`;
+
+});
+
+}
+
+updateTable();
+setInterval(updateTable,60000);
+
+</script>
+
+</body>
+</html>
