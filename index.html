@@ -14,22 +14,23 @@ body{
     margin:20px;
 }
 
-/* Close button */
+/* Close Button */
 .close-btn{
     position:fixed;
     top:10px;
     right:10px;
-    width:35px;
-    height:35px;
+    width:40px;
+    height:40px;
     border:none;
     border-radius:50%;
     background:#c62828;
     color:white;
-    font-size:20px;
+    font-size:22px;
     font-weight:bold;
     cursor:pointer;
     z-index:9999;
     box-shadow:0 0 10px rgba(0,0,0,0.5);
+    transition:0.3s;
 }
 
 .close-btn:hover{
@@ -86,8 +87,6 @@ tr:nth-child(even){
 
 <button class="close-btn" onclick="closePage()">✖</button>
 
-<div id="mainContent">
-
 <h1>Individual Project Completion Countdown</h1>
 
 <table>
@@ -104,8 +103,6 @@ tr:nth-child(even){
 
 <tbody id="projectTable"></tbody>
 </table>
-
-</div>
 
 <script>
 
@@ -197,11 +194,11 @@ end:"2026-10-20"
 function updateTable(){
 
 const table = document.getElementById("projectTable");
-table.innerHTML="";
+table.innerHTML = "";
 
 const now = new Date();
 
-projects.forEach(project=>{
+projects.forEach(project => {
 
 const start = new Date(project.start);
 const end = new Date(project.end);
@@ -209,30 +206,24 @@ const end = new Date(project.end);
 const totalDuration = end - start;
 const elapsed = now - start;
 
-const percent =
-Math.min(
+const percent = Math.min(
 100,
-Math.max(
-0,
-(elapsed / totalDuration) * 100
-)
+Math.max(0, (elapsed / totalDuration) * 100)
 ).toFixed(1);
 
-const remaining =
-Math.ceil(
-(end - now)/(1000*60*60*24)
+const remaining = Math.ceil(
+(end - now) / (1000 * 60 * 60 * 24)
 );
 
-let statusClass="";
-let statusText="";
+let statusClass = "";
+let statusText = "";
 
-if(remaining < 0){
-statusClass="ended";
-statusText="Ended";
-}
-else{
-statusClass="running";
-statusText="Running";
+if (remaining < 0){
+statusClass = "ended";
+statusText = "Ended";
+}else{
+statusClass = "running";
+statusText = "Running";
 }
 
 table.innerHTML += `
@@ -250,21 +241,9 @@ table.innerHTML += `
 
 }
 
+/* Return to previous page */
 function closePage(){
-document.body.innerHTML = `
-<div style="
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-background:#111;
-color:white;
-font-size:28px;
-font-family:Arial,sans-serif;
-">
-Thank you for viewing.
-</div>
-`;
+    window.history.back();
 }
 
 updateTable();
