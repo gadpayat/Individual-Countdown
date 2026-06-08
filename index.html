@@ -218,12 +218,17 @@ const remaining = Math.ceil(
 let statusClass = "";
 let statusText = "";
 
-if (remaining < 0){
-statusClass = "ended";
-statusText = "Ended 🔴";
-}else{
-statusClass = "running";
-statusText = "Running 🟢";
+if (project.delayed === true){
+    statusClass = "delayed";
+    statusText = "Delayed 🟣";
+}
+else if (remaining < 0){
+    statusClass = "ended";
+    statusText = "Ended 🔴";
+}
+else{
+    statusClass = "running";
+    statusText = "Running 🟢";
 }
 
 table.innerHTML += `
