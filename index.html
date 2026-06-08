@@ -70,15 +70,15 @@ tr:nth-child(even){
 }
 
 .ended{
-    color:#11a30a;
+    color:#f50202;
 }
 
 .running{
-    color:#ffcc00;
+    color:#0fcc0c;
 }
 
 .delayed{
-    color:#ff4444;
+    color:#8212de;
 }
 </style>
 
@@ -220,10 +220,10 @@ let statusText = "";
 
 if (remaining < 0){
 statusClass = "ended";
-statusText = "Ended";
+statusText = "Ended 🔴";
 }else{
 statusClass = "running";
-statusText = "Running";
+statusText = "Running 🟢";
 }
 
 table.innerHTML += `
